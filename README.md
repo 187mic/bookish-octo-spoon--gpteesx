@@ -160,6 +160,59 @@ except ValueError as e:
 4. Create a new API key
 5. Copy the key to your `.env` file
 
+## Important: This is for OpenAI API, Not ChatGPT App
+
+⚠️ **Common Confusion**: This configuration is for using the **OpenAI API** in Python scripts, NOT for:
+- ChatGPT web interface (chat.openai.com)
+- Custom GPTs
+- ChatGPT mobile app
+- GitHub Copilot
+
+### What You Need
+
+This repository requires an **OpenAI API Key** (starts with `sk-`), which is different from:
+- ❌ GitHub personal access tokens
+- ❌ ChatGPT Plus subscription
+- ❌ GitHub OAuth tokens
+
+### If You Want to Use This Code
+
+1. **Get OpenAI API Access**: Visit [platform.openai.com](https://platform.openai.com/api-keys)
+2. **Create API Key**: Generate a new API key (starts with `sk-`)
+3. **Add to .env**: Put your key in the `.env` file as `OPENAI_API_KEY=sk-...`
+4. **Run Python Scripts**: Use this code in Python scripts on your machine
+
+### If You Want to Use ChatGPT App/Custom GPTs
+
+This repository is **not designed** for ChatGPT app integration. For Custom GPTs:
+- Use ChatGPT's action builder interface
+- Configure API endpoints and authentication there
+- No need for this repository
+
+## Troubleshooting
+
+### "GPT agent keeps getting blocked"
+
+If you're trying to use this with ChatGPT or GitHub:
+- This code is for **direct OpenAI API** usage in Python
+- ChatGPT app and Custom GPTs use a different authentication method
+- GitHub tokens are not used for OpenAI API access
+
+### "Invalid API key format"
+
+Make sure your API key:
+- Starts with `sk-`
+- Is from [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
+- Is not a GitHub token or OAuth key
+
+### "Configuration error"
+
+Check that:
+1. `.env` file exists in the project root
+2. `OPENAI_API_KEY` is set in `.env`
+3. API key is valid and has not been revoked
+4. Python dependencies are installed: `pip install -r requirements.txt`
+
 ## License
 
 See LICENSE file for details.
