@@ -28,8 +28,22 @@ class GPTConfig:
         self.api_key = os.getenv('OPENAI_API_KEY')
         self.org_id = os.getenv('OPENAI_ORG_ID')
         self.model = os.getenv('GPT_MODEL', 'gpt-4')
-        self.temperature = float(os.getenv('GPT_TEMPERATURE', '0.7'))
-        self.max_tokens = int(os.getenv('GPT_MAX_TOKENS', '2000'))
+        
+        try:
+            self.temperature = float(os.getenv('GPT_TEMPERATURE', '0.7'))
+        except ValueError:
+            raise ValueError(
+                "GPT_TEMPERATURE must be a valid number. "
+                f"Got: {os.getenv('GPT_TEMPERATURE')}"
+            )
+        
+        try:
+            self.max_tokens = int(os.getenv('GPT_MAX_TOKENS', '2000'))
+        except ValueError:
+            raise ValueError(
+                "GPT_MAX_TOKENS must be a valid integer. "
+                f"Got: {os.getenv('GPT_MAX_TOKENS')}"
+            )
         
         self._validate()
     

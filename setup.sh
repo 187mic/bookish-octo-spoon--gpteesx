@@ -52,14 +52,14 @@ fi
 echo ""
 echo "Running configuration tests..."
 if python3 test_config.py > /dev/null 2>&1; then
+    echo "✓ Configuration tests passed!"
+else
     echo "✗ Tests failed - this is expected if you haven't set your API key yet"
     echo ""
     echo "Next steps:"
     echo "  1. Edit .env and add your OpenAI API key"
     echo "  2. Run: python3 test_config.py"
     echo "  3. Run: python3 example_usage.py"
-else
-    echo "✓ Configuration tests passed!"
 fi
 
 echo ""
