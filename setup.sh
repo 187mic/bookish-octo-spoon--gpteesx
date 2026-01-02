@@ -27,8 +27,13 @@ echo "✓ pip found"
 # Install dependencies
 echo ""
 echo "Installing dependencies..."
-pip3 install -r requirements.txt --quiet
-echo "✓ Dependencies installed"
+if pip3 install -r requirements.txt --quiet; then
+    echo "✓ Dependencies installed"
+else
+    echo "✗ Failed to install dependencies"
+    echo "  Try running: pip3 install -r requirements.txt"
+    exit 1
+fi
 
 # Create .env file if it doesn't exist
 if [ ! -f .env ]; then

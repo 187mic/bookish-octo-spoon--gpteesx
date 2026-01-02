@@ -55,10 +55,13 @@ class GPTConfig:
                 "Please set it in your .env file or environment variables."
             )
         
+        # Validate OpenAI API key format (as of 2024, OpenAI keys start with 'sk-')
+        # Note: This validation may need updating if OpenAI changes their key format
         if not self.api_key.startswith('sk-'):
             raise ValueError(
                 "Invalid OPENAI_API_KEY format. "
-                "API key should start with 'sk-'"
+                "API key should start with 'sk-'. "
+                "If you're using a different key format, please verify your key."
             )
     
     def get_client_config(self) -> dict:
