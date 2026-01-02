@@ -12,13 +12,25 @@ A simple and secure way to configure OpenAI GPT API with authentication token ma
 
 ## Setup
 
-### 1. Install Dependencies
+### Quick Setup (Recommended)
+
+Run the setup script to automatically install dependencies and configure your environment:
+
+```bash
+bash setup.sh
+```
+
+Then edit `.env` to add your OpenAI API key.
+
+### Manual Setup
+
+#### 1. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Configure Authentication
+#### 2. Configure Authentication
 
 Copy the example environment file and add your OpenAI API key:
 
@@ -32,7 +44,7 @@ Edit `.env` and add your OpenAI API key:
 OPENAI_API_KEY=sk-your-actual-api-key-here
 ```
 
-### 3. (Optional) Customize GPT Settings
+#### 3. (Optional) Customize GPT Settings
 
 You can customize the GPT model settings in your `.env` file:
 
