@@ -1,218 +1,170 @@
-# GPT Configuration with Auth Token
+# ChatGPT GitHub Integration
 
-A simple and secure way to configure OpenAI GPT API with authentication token management.
+Use ChatGPT to interact with GitHub - create repositories, commit code, manage files, and more through natural conversation.
 
-## Features
+## What This Does
 
-- ✅ Secure authentication token management using environment variables
-- ✅ Configurable GPT model parameters (model, temperature, max_tokens)
-- ✅ Easy-to-use configuration module
-- ✅ Example usage script demonstrating API integration
-- ✅ Input validation and error handling
+This repository provides the configuration needed to create a **Custom GPT** that can:
 
-## Setup
+- ✅ Create new GitHub repositories
+- ✅ Add, update, and read files in repositories  
+- ✅ Create branches and manage repository structure
+- ✅ Commit code and track changes
+- ✅ List commits and repository information
+- ✅ Manage projects through natural conversation
 
-### Quick Setup (Recommended)
+## Quick Start
 
-Run the setup script to automatically install dependencies and configure your environment:
+### 1. Get Your GitHub Token
 
-```bash
-bash setup.sh
+Go to [GitHub Settings > Tokens](https://github.com/settings/tokens) and create a new token with these scopes:
+- `repo` (Full control of private repositories)
+- `user` (Read user profile data)
+- `workflow` (Update GitHub Action workflows)
+
+**Save your token securely - you'll need it in the next step!**
+
+### 2. Create Your Custom GPT
+
+1. Go to [ChatGPT](https://chat.openai.com/)
+2. Click your profile → **"My GPTs"** → **"Create a GPT"**
+3. Follow the detailed setup guide in **[CUSTOM_GPT_SETUP.md](./CUSTOM_GPT_SETUP.md)**
+
+### 3. Import the GitHub API Schema
+
+In your Custom GPT's Actions section:
+- Upload the `github-api-schema.yaml` file from this repository
+- Configure Bearer token authentication with your GitHub token
+
+### 4. Start Using It!
+
+Talk to your GPT naturally:
+
+```
+"Create a new repository called 'my-project' with a README"
 ```
 
-Then edit `.env` to add your OpenAI API key.
-
-### Manual Setup
-
-#### 1. Install Dependencies
-
-```bash
-pip install -r requirements.txt
+```
+"Add a Python file called main.py with a basic Flask application"
 ```
 
-#### 2. Configure Authentication
-
-Copy the example environment file and add your OpenAI API key:
-
-```bash
-cp .env.example .env
+```
+"Show me the recent commits in my repository"
 ```
 
-Edit `.env` and add your OpenAI API key:
+## What's Included
 
-```env
-OPENAI_API_KEY=sk-your-actual-api-key-here
-```
-
-#### 3. (Optional) Customize GPT Settings
-
-You can customize the GPT model settings in your `.env` file:
-
-```env
-GPT_MODEL=gpt-4
-GPT_TEMPERATURE=0.7
-GPT_MAX_TOKENS=2000
-OPENAI_ORG_ID=your-org-id  # Optional
-```
-
-## Usage
-
-### Basic Configuration
-
-```python
-from gpt_config import load_gpt_config
-
-# Load configuration from .env file
-config = load_gpt_config()
-
-# Get client configuration
-client_config = config.get_client_config()
-print(client_config)  # {'api_key': 'sk-...'}
-
-# Get default parameters
-params = config.get_default_params()
-print(params)  # {'model': 'gpt-4', 'temperature': 0.7, 'max_tokens': 2000}
-```
-
-### Using with OpenAI Client
-
-```python
-from openai import OpenAI
-from gpt_config import load_gpt_config
-
-# Load configuration
-config = load_gpt_config()
-
-# Create OpenAI client
-client = OpenAI(**config.get_client_config())
-
-# Make API call with default parameters
-params = config.get_default_params()
-response = client.chat.completions.create(
-    model=params['model'],
-    messages=[
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": "Hello!"}
-    ],
-    temperature=params['temperature'],
-    max_tokens=params['max_tokens']
-)
-
-print(response.choices[0].message.content)
-```
-
-### Run Example Script
-
-To test your configuration:
-
-```bash
-python example_usage.py
-```
-
-This will:
-1. Load your configuration
-2. Create an OpenAI client
-3. Make a test API call
-4. Display the response
-
-## Configuration Options
-
-| Variable | Description | Default | Required |
-|----------|-------------|---------|----------|
-| `OPENAI_API_KEY` | Your OpenAI API key | - | ✅ Yes |
-| `GPT_MODEL` | GPT model to use | `gpt-4` | No |
-| `GPT_TEMPERATURE` | Response randomness (0-2) | `0.7` | No |
-| `GPT_MAX_TOKENS` | Maximum response length | `2000` | No |
-| `OPENAI_ORG_ID` | Organization ID | - | No |
-
-## Security
-
-- **Never commit** your `.env` file with actual API keys
-- The `.gitignore` file is configured to exclude `.env` files
-- API keys are validated to ensure they start with `sk-`
-- The configuration class masks API keys in string representations
-
-## Error Handling
-
-The configuration module includes validation:
-
-```python
-from gpt_config import load_gpt_config
-
-try:
-    config = load_gpt_config()
-except ValueError as e:
-    print(f"Configuration error: {e}")
-    # Handle missing or invalid API key
-```
+📄 **`github-api-schema.yaml`** - OpenAPI schema for GitHub API integration  
+📘 **`CUSTOM_GPT_SETUP.md`** - Detailed step-by-step setup guide  
+📝 **`.env.example`** - Template for storing your GitHub token locally (optional)  
+🔒 **`.gitignore`** - Protects your tokens from being committed
 
 ## Requirements
 
-- Python 3.7+
-- openai >= 1.0.0
-- python-dotenv >= 1.0.0
+- **ChatGPT Plus or Enterprise** - Required to create Custom GPTs
+- **GitHub Account** - For the repositories you'll manage
+- **GitHub Personal Access Token** - For authentication
 
-## Getting an API Key
+## Example Use Cases
 
-1. Go to [OpenAI's website](https://platform.openai.com/)
-2. Sign up or log in
-3. Navigate to API Keys section
-4. Create a new API key
-5. Copy the key to your `.env` file
+### Create a New Project
 
-## Important: This is for OpenAI API, Not ChatGPT App
+```
+User: "Create a new repository called 'flask-api' and set it up as a basic Flask REST API 
+with a README, requirements.txt, and main application file"
+```
 
-⚠️ **Common Confusion**: This configuration is for using the **OpenAI API** in Python scripts, NOT for:
-- ChatGPT web interface (chat.openai.com)
-- Custom GPTs
-- ChatGPT mobile app
-- GitHub Copilot
+### Add Code to Existing Repository
 
-### What You Need
+```
+User: "In my flask-api repository, add a new endpoint for user authentication"
+```
 
-This repository requires an **OpenAI API Key** (starts with `sk-`), which is different from:
-- ❌ GitHub personal access tokens
-- ❌ ChatGPT Plus subscription
-- ❌ GitHub OAuth tokens
+### Manage Files
 
-### If You Want to Use This Code
+```
+User: "Update the README in my flask-api repo to include installation instructions and API documentation"
+```
 
-1. **Get OpenAI API Access**: Visit [platform.openai.com](https://platform.openai.com/api-keys)
-2. **Create API Key**: Generate a new API key (starts with `sk-`)
-3. **Add to .env**: Put your key in the `.env` file as `OPENAI_API_KEY=sk-...`
-4. **Run Python Scripts**: Use this code in Python scripts on your machine
+### Check Repository Status
 
-### If You Want to Use ChatGPT App/Custom GPTs
+```
+User: "Show me the last 5 commits in my flask-api repository"
+```
 
-This repository is **not designed** for ChatGPT app integration. For Custom GPTs:
-- Use ChatGPT's action builder interface
-- Configure API endpoints and authentication there
-- No need for this repository
+## How It Works
+
+```
+You (ChatGPT) ←→ Custom GPT ←→ GitHub API ←→ Your Repositories
+```
+
+1. You chat with your Custom GPT naturally
+2. The GPT interprets your request and calls the GitHub API
+3. GitHub performs the operation (create repo, commit code, etc.)
+4. The GPT confirms what was done and provides links
+
+**No local code execution** - everything happens through ChatGPT's action system and GitHub's API.
+
+## Security
+
+🔐 **Your GitHub token is secure:**
+- Stored only in your Custom GPT's action configuration
+- Not visible to others even if you share your GPT
+- Can be rotated anytime from GitHub settings
+
+⚠️ **Best Practices:**
+- Only grant minimum necessary token scopes
+- Rotate tokens regularly (every 90 days)
+- Review GitHub's security log periodically
+- Never commit your actual token to the repository
+
+## Detailed Setup
+
+For complete step-by-step instructions, see **[CUSTOM_GPT_SETUP.md](./CUSTOM_GPT_SETUP.md)**
+
+The guide includes:
+- Detailed token creation steps
+- Custom GPT configuration instructions
+- Example prompts and conversations
+- Troubleshooting common issues
+- Advanced usage patterns
 
 ## Troubleshooting
 
-### "GPT agent keeps getting blocked"
+**Authentication Errors:**
+- Verify your GitHub token is valid and hasn't expired
+- Check that you selected the correct scopes when creating the token
+- Ensure Bearer auth is configured correctly in the action
 
-If you're trying to use this with ChatGPT or GitHub:
-- This code is for **direct OpenAI API** usage in Python
-- ChatGPT app and Custom GPTs use a different authentication method
-- GitHub tokens are not used for OpenAI API access
+**File Operation Errors:**
+- The API requires base64 encoding for file contents (the GPT handles this automatically)
+- Verify repository names and paths are correct
+- Check that you have write access to the repository
 
-### "Invalid API key format"
+**Rate Limiting:**
+- GitHub API allows 5,000 requests/hour for authenticated requests
+- If you hit limits, wait an hour or reduce API calls
 
-Make sure your API key:
-- Starts with `sk-`
-- Is from [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
-- Is not a GitHub token or OAuth key
+## What Changed?
 
-### "Configuration error"
+This repository previously contained Python code for OpenAI API configuration. It has been updated to provide Custom GPT configuration for GitHub integration instead.
 
-Check that:
-1. `.env` file exists in the project root
-2. `OPENAI_API_KEY` is set in `.env`
-3. API key is valid and has not been revoked
-4. Python dependencies are installed: `pip install -r requirements.txt`
+If you're looking for Python OpenAI API configuration, you'll need a different solution.
+
+## Contributing
+
+Feel free to:
+- Report issues with the API schema
+- Suggest additional GitHub API endpoints to include
+- Share example use cases and prompts
+- Improve the documentation
+
+## Resources
+
+- [GitHub API Documentation](https://docs.github.com/en/rest)
+- [OpenAI Custom GPTs Guide](https://help.openai.com/en/articles/8554397-creating-a-gpt)
+- [GitHub Personal Access Tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
 
 ## License
 
-See LICENSE file for details.
+See [LICENSE](./LICENSE) file for details.
